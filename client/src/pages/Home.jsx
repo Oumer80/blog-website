@@ -1,14 +1,11 @@
-import React from 'react'
-import Navbar from '../components/Navbar'
+
+import DashboardLayout from '../components/DashboardLayout'
 
 const Home = () => {
   return (
-    <div>
-      <div>
-        <Navbar/>
-      </div>
-      home
-    </div>
+    <DashboardLayout activeMenu='Dashboard'>
+      Home
+    </DashboardLayout>
   )
 }
 

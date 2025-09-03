@@ -11,7 +11,7 @@ const Navbar = () => {
   }
   const {user,logout}=useAuth()
   return (
-    <div className='flex items-center justify-between p-4 bg-teal-700 text-gray-100 mb-4'>
+    <div className='flex items-center justify-between p-4 bg-teal-700 text-gray-100 '>
       <div className='text-2xl font-bold italic font-mono'>Masho</div>
       <div>
         <input type="text" placeholder='Search... ' className='px-4 py-1  outline-none focus:border-2 focus:border-blue-700 rounded text-gray-700' />
