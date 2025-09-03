@@ -13,7 +13,9 @@ const Navbar = () => {
   return (
     <div className='flex items-center justify-between p-4 bg-teal-700 text-gray-100 mb-4'>
       <div className='text-2xl font-bold italic font-mono'>Masho</div>
-      <div>e</div>
+      <div>
+        <input type="text" placeholder='Search... ' className='px-4 py-1  outline-none focus:border-2 focus:border-blue-700 rounded text-gray-700' />
+      </div>
       <div>
        {!user ? (<div className='flex gap-3'>
         <button className='px-4 py-2 rounded border border-gray-500 '>Login</button>
