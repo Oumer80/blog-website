@@ -17,12 +17,12 @@ export const sidebarItems = [
         "id":3,
         "text":"My Post",
         "icon":MdFilterListAlt,
-        "path":"/",
+        "path":"/my-post",
     },
     {
         "id":4,
         "text":"Log Out",
         "icon":MdLogout,
-        "path":"/login",
+        "path":"login",
     },
 ]

@@ -30,7 +30,7 @@ export const UserProvider = ({children})=>{
     const value={user, loading,logout, navigate,updateUser}
     return(
         <AuthContext.Provider value={value}>
-            {children}
+           {children}
         </AuthContext.Provider>
     )
 }
