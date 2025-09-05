@@ -30,13 +30,13 @@ import { protect } from '../middleware/authMiddleware.js';
             });
 
             if (user) {
-            const token= generateToken(res,user._id);
+           
                 res.status(201).json({
                     _id: user._id,
                     name: user.name,
                     email: user.email,
                     isAdmin: user.isAdmin,
-                    token: token
+                    token: generateToken(user._id)
                 });
             } else {
                 res.status(400);
@@ -62,7 +62,7 @@ import { protect } from '../middleware/authMiddleware.js';
                     name: user.name,
                     email: user.email,
                     isAdmin: user.isAdmin,
-                    token: token
+                     token: generateToken(user._id)
                 });
             } else {
                 res.status(401);
@@ -71,22 +71,7 @@ import { protect } from '../middleware/authMiddleware.js';
         })
     );
 
-    // @desc    Logout user / clear cookie
-    // @route   POST /api/users/logout
-    // @access  Private
-    router.post(
-        '/logout',
-        protect,
-        (req, res) => {
-            res.cookie('jwt', '', {
-                httpOnly: true,
-                expires: new Date(0),
-            });
-            res.status(200).json({ message: 'Logged out successfully' });
-        }
-    );
-
-    // @desc    Get user profile
+     // @desc    Get user profile
     // @route   GET /api/users/profile
     // @access  Private
     router.get(
@@ -97,7 +82,7 @@ import { protect } from '../middleware/authMiddleware.js';
 
             if (user) {
                 res.json({
-                    _id: user._id,
+                    id: user._id,
                     name: user.name,
                     email: user.email,
                     isAdmin: user.isAdmin,  // Include isAdmin

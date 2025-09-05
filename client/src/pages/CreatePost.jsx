@@ -3,6 +3,7 @@ import { MdTitle } from 'react-icons/md'
 import DashboardLayout from '../components/DashboardLayout'
 import axios from 'axios'
 import { useState } from 'react'
+import useAuth from '../context/useAuth'
 
 const CreatePost = () => {
   const [title, setTitle]=useState('')
@@ -10,17 +11,18 @@ const CreatePost = () => {
   const [error, setError]=useState('')
   const [content, setContent]=useState('')
   const [image, setImage]=useState('')
-   
+   useAuth();
+
   const handleSubmit=async(e)=>{
      e.preventDefault()
      setError('')
      setLoading(true)
      try {
-      const response = await axios.post('https://glorious-robot-r4pj9x7gx6wq3r9g-8080.app.github.dev/api/posts',{title,image,content},{headers:{"Content-Type":"application/json"}})
+      const response = await axios.post('https://glorious-robot-r4pj9x7gx6wq3r9g-8080.app.github.dev/api/posts',{title,image,content},{headers:{"Content-Type":"application/json"}},{})
       
       console.log(response.data)
      } catch (error) {
-      setError(error.message)
+      setError(error.response?.data?.message)
      }finally{
       setLoading(false)
      }
@@ -34,7 +36,7 @@ const CreatePost = () => {
           <div className="mt-4">
             <div>
               <label
-                className="block text-gray-700 text-sm font-bold mb-2"
+                className=" text-gray-700 text-sm font-bold mb-2"
                 htmlFor="title"
               >
                 title
@@ -55,14 +57,14 @@ const CreatePost = () => {
               >
                 content
               </label>
-              <input
+              <textarea
                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 id="content"
                 type="content"
                 placeholder="content"
                 value={content}
                 onChange={(e) => setContent(e.target.value)}
-              />
+              ></textarea>
             </div>
             <div>
               <label
@@ -74,7 +76,7 @@ const CreatePost = () => {
               <input
                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 id="image"
-                type="image"
+                type="text"
                 placeholder="image"
                 value={image}
                 onChange={(e) => setImage(e.target.value)}

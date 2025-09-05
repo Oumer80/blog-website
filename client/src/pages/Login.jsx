@@ -9,7 +9,7 @@ const Login = () => {
   const [error, setError] = useState(null);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { updateUser, navigate } = useAuth();
+  const {  navigate } = useAuth();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -20,10 +20,11 @@ const Login = () => {
         "https://glorious-robot-r4pj9x7gx6wq3r9g-8080.app.github.dev/api/users/login",
         { email, password }
       );
-      updateUser(response.data);
-      console.log(response.data)
-      localStorage.setItem("token", JSON.stringify(response.data));
-      navigate("/");
+          const {token}= response.data; 
+        if(token){
+          localStorage.setItem("token", token);
+          navigate('/');
+        }
     } catch (error) {
       setError(error.response?.data?.message);
       console.log(error.message);
