@@ -2,7 +2,10 @@
 import { useEffect, useState } from 'react'
 import DashboardLayout from '../components/DashboardLayout'
 import axios from 'axios'
+
+import PostCard from '../components/PostCard';
 import useAuth from '../context/useAuth';
+
 
 const Home = () => {
   const [posts, setPosts] = useState([]);
@@ -37,7 +40,7 @@ const Home = () => {
                 )}
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                     {posts.map((post) => (
-                        <PostItem key={post._id} post={post} onDelete={handleDelete} />
+                        <PostCard key={post._id} post={post} onDelete={handleDelete} />
                     ))}
                 </div>
     </DashboardLayout>
