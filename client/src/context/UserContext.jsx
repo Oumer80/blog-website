@@ -22,7 +22,7 @@ export const UserProvider = ({children})=>{
                 const userData = response.data;
                 localStorage.setItem('user', JSON.stringify(userData));
                 setUser(userData);
-                navigate('/profile');
+                navigate('/');
             } catch (error) {
                 console.error(error.response?.data?.message || 'Login failed');
             }
@@ -34,7 +34,7 @@ export const UserProvider = ({children})=>{
                 const userData = response.data;
                 localStorage.setItem('user', JSON.stringify(userData));
                 setUser(userData);
-                navigate('/profile');
+                navigate('/');
             } catch (error) {
                 console.error(error.response?.data?.message || 'Registration failed');
             }
@@ -45,10 +45,14 @@ export const UserProvider = ({children})=>{
         setUser(null)
         navigate('/login')
     }
-    const value={user, loading,logout,login,register, navigate}
+    const value={ user,
+            loading,
+            login,
+            register,
+            logout, navigate}
     return(
         <AuthContext.Provider value={value}>
-           {children}
+           {!loading && children}
         </AuthContext.Provider>
     )
 }
