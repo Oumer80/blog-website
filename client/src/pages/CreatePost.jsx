@@ -5,20 +5,21 @@ import axios from 'axios'
 import { useState } from 'react'
 import useAuth from '../context/useAuth'
 
+
 const CreatePost = () => {
   const [title, setTitle]=useState('')
   const [loading, setLoading]=useState(false)
   const [error, setError]=useState('')
   const [content, setContent]=useState('')
   const [image, setImage]=useState('')
-   useAuth();
+ const {user}=useAuth()
 
   const handleSubmit=async(e)=>{
      e.preventDefault()
      setError('')
      setLoading(true)
      try {
-      const response = await axios.post('https://glorious-robot-r4pj9x7gx6wq3r9g-8080.app.github.dev/api/posts',{title,image,content},{headers:{"Content-Type":"application/json"}},{})
+      const response = await axios.post('https://glorious-robot-r4pj9x7gx6wq3r9g-8080.app.github.dev/api/posts',{title,image,content},{withCredentials:true},{headers:{'Authorization':`Bearer ${user.token}`}})
       
       console.log(response.data)
      } catch (error) {
@@ -31,7 +32,7 @@ const CreatePost = () => {
   return (
     <DashboardLayout activeMenu={'Create Post'}>
      <h1 className='text-center text-2xl font-bold'>Create Post</h1>
-     <div className='mt-4'>
+    {user && <div className='mt-4'>
       <form onSubmit={handleSubmit}>
           <div className="mt-4">
             <div>
@@ -100,7 +101,7 @@ const CreatePost = () => {
             </div>
           </div>
         </form>
-     </div>
+     </div>}
     </DashboardLayout>
   )
 }

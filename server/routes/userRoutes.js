@@ -56,7 +56,7 @@ import { protect } from '../middleware/authMiddleware.js';
             const user = await User.findOne({ email });
 
             if (user && (await user.matchPassword(password))) {
-               const token= generateToken(res,user._id);
+              
                 res.json({
                     _id: user._id,
                     name: user.name,

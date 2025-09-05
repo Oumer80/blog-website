@@ -6,8 +6,9 @@ import {useNavigate} from 'react-router-dom'
 export const UserProvider = ({children})=>{
     const [user, setUser]=useState(null)
     const [loading, setLoading]=useState(true)
+    
     const navigate = useNavigate()
-   
+  
    useEffect(() => {
             const storedUser = localStorage.getItem('user');
             if (storedUser) {
@@ -18,9 +19,9 @@ export const UserProvider = ({children})=>{
 
     const login = async (email, password) => {
             try {
-                const response = await axios.post('/api/users/login', { email, password });
+                const response = await axios.post("https://glorious-robot-r4pj9x7gx6wq3r9g-8080.app.github.dev/api/users/login", { email, password });
                 const userData = response.data;
-                localStorage.setItem('user', JSON.stringify(userData));
+                localStorage.setItem('token', JSON.stringify(userData));
                 setUser(userData);
                 navigate('/');
             } catch (error) {
@@ -32,7 +33,7 @@ export const UserProvider = ({children})=>{
             try {
                 const response = await axios.post('/api/users', { name, email, password });
                 const userData = response.data;
-                localStorage.setItem('user', JSON.stringify(userData));
+                localStorage.setItem('token', JSON.stringify(userData));
                 setUser(userData);
                 navigate('/');
             } catch (error) {
@@ -41,7 +42,7 @@ export const UserProvider = ({children})=>{
         };
 
     const logout = ()=>{
-        localStorage.clear()
+        localStorage.removeItem()
         setUser(null)
         navigate('/login')
     }

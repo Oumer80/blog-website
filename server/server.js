@@ -2,7 +2,7 @@
     import colors from 'colors'
     import dotenv from 'dotenv';
     import cors from 'cors';
-    import cookieParser from 'cookie-parser';
+   
     import connectDB from './config/db.js';
     import userRoutes from './routes/userRoutes.js';
     import postRoutes from './routes/postRoutes.js';
@@ -25,7 +25,7 @@
     app.use(cors(corsOptions));
 
     app.use(express.json()); // To parse JSON data
-    app.use(cookieParser()); // To parse cookies
+    // To parse cookies
 
     // Routes
     app.use('/api/users', userRoutes);
