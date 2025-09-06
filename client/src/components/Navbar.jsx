@@ -1,33 +1,57 @@
-import React from 'react'
-import useAuth from '../context/useAuth'
-import Profile from './Profile'
-import { useState } from 'react';
+import React, { useContext } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { AuthContext } from "../context/AuthContext.jsx";
 
 const Navbar = () => {
-   const [open, setOpen] = useState(false);
+  const { user, logout } = useContext(AuthContext);
+  const navigate = useNavigate();
 
-  const handleProfile=()=>{
-    setOpen(!open)
-  }
-  const {user,logout}=useAuth()
+  const handleLogout = () => {
+    logout();
+    navigate("/login");
+  };
+
   return (
-    <div className='flex items-center justify-between p-4 bg-teal-700 text-gray-100 '>
-      <div className='text-2xl font-bold italic font-mono'>Masho</div>
-      <div>
-        <input type="text" placeholder='Search... ' className='px-4 py-1  outline-none focus:border-2 focus:border-blue-700 rounded text-gray-700' />
+    <nav className="bg-blue-600 text-white p-4 flex justify-between items-center">
+      <Link to="/" className="font-bold text-xl">
+        MERN Blog
+      </Link>
+      <div className="space-x-4">
+        {user ? (
+          <>
+            <span>Welcome, {user.username}</span>
+            <Link
+              to="/create"
+              className="bg-blue-800 px-3 py-1 rounded hover:bg-blue-700"
+            >
+              Create Post
+            </Link>
+            <button
+              onClick={handleLogout}
+              className="bg-red-600 px-3 py-1 rounded hover:bg-red-500"
+            >
+              Logout
+            </button>
+          </>
+        ) : (
+          <>
+            <Link
+              to="/login"
+              className="bg-blue-800 px-3 py-1 rounded hover:bg-blue-700"
+            >
+              Login
+            </Link>
+            <Link
+              to="/register"
+              className="bg-green-600 px-3 py-1 rounded hover:bg-green-500"
+            >
+              Register
+            </Link>
+          </>
+        )}
       </div>
-      <div>
-       {!user ? (<div className='flex gap-3'>
-        <button className='px-4 py-2 rounded border border-gray-500 '>Login</button>
-        <button className='px-4 py-2 rounded bg-to-blue-700 border border-gray-500 '>Join us</button>
-       </div>):(<div className='flex gap-3'>
-        <div onClick={handleProfile}  className=' cursor-pointer flex items-center justify-center w-10 h-10 rounded-full  bg-purple-800  text-2xl'>{user?.name[0].toUpperCase()}</div>
-        <button onClick={logout} className='px-2 py-1 rounded-md hover:bg-red-700 bg-red-500'>Logout</button></div>
-       )}
-       {open && <Profile/>}
-      </div>
-    </div>
-  )
-}
+    </nav>
+  );
+};
 
-export default Navbar
+export default Navbar;

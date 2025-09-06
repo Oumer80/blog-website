@@ -1,26 +1,44 @@
-import React from 'react'
-import { BrowserRouter, Route, Routes } from 'react-router-dom'
-import Login from './pages/Login'
-import SignUp from './pages/SignUp'
-import Home from './pages/Home'
-import PrivateRoute from './components/PrivateRoute'
-import { UserProvider } from './context/UserContext'
-import MyPost from './pages/MyPost'
-import CreatePost from './pages/CreatePost'
+import React from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { AuthProvider } from "./context/AuthContext.jsx";
+import Navbar from "./components/Navbar.jsx";
+import PrivateRoute from "./components/PrivateRoute.jsx";
+import Home from "./pages/Home.jsx";
+import Login from "./pages/Login.jsx";
+import Register from "./pages/Register.jsx";
+import CreatePost from "./pages/CreatePost.jsx";
+import EditPost from "./pages/EditPost.jsx";
 
 const App = () => {
   return (
-    <BrowserRouter>
-    <UserProvider>
-    <Routes>
-      <Route path='/login' element={<Login/>}/>
-      <Route path='/signup' element={<SignUp/>}/>
-      <Route path='/' element={<PrivateRoute><Home/></PrivateRoute>}/>
-      <Route path='/create-post' element={<PrivateRoute><CreatePost/></PrivateRoute>}/>
-      <Route path='/my-post' element={<PrivateRoute><MyPost/></PrivateRoute>}/>
-    </Routes>
-    </UserProvider>
-    </BrowserRouter>
+    <AuthProvider>
+      <Router>
+        <div className="min-h-screen bg-gray-100">
+          <Navbar />
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+            <Route
+              path="/create"
+              element={
+                <PrivateRoute>
+                  <CreatePost />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="/posts/:id/edit"
+              element={
+                <PrivateRoute>
+                  <EditPost />
+                </PrivateRoute>
+              }
+            />
+          </Routes>
+        </div>
+      </Router>
+    </AuthProvider>
   )
 }
 
