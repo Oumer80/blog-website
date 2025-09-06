@@ -1,10 +1,36 @@
-import React, { useContext } from "react";
-import { Link } from "react-router-dom";
-import { AuthContext } from "../context/AuthContext";
+import React, { useEffect, useState, useContext } from "react";
+import axios from "../api/axios.js";
+import PostCard from "../components/PostCard.jsx";
+import { AuthContext } from "../context/AuthContext.jsx";
+import { useNavigate, useParams } from "react-router-dom";
+const PostDetails = () => {
+  const [posts, setPosts] = useState([]);
+  const { user } = useContext(AuthContext);
+  const {id}=useParams()
+  const navigate = useNavigate()
+ 
 
-const PostCard = ({ post, onDelete, onEdit }) => {
-  const {user}=useContext(AuthContext)
-  const isAuthor = user && post.user && user.id === post.user._id
+  useEffect(() => {
+    const fetchPost = async () => {
+      try {
+        const response = await axios.get(`/posts/${id}`);
+        setPosts(response.data);
+      } catch (error) {
+        console.error("Error fetching post:", error);
+      }
+    };
+    fetchPost();
+  }, [id]);
+   const handleDelete = async (id) => {
+    if (window.confirm("Are you sure you want to delete this post?")) {
+      try {
+        await axios.delete(`/posts/${id}`);
+        navigate('/')    
+      } catch (error) {
+        console.error("Error deleting post:", error);
+      }
+    }
+  };
   return (
     <div className="border rounded p-4 shadow hover:shadow-lg transition mb-4">
       <h2 className="text-xl font-semibold mb-2">{post.title}</h2>
@@ -40,5 +66,4 @@ const PostCard = ({ post, onDelete, onEdit }) => {
     </div>
   );
 };
-
-export default PostCard;
+export default PostDetails;

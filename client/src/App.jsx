@@ -28,7 +28,7 @@ const App = () => {
               }
             />
             <Route
-              path="/posts/:id/edit"
+              path="/posts/edit/:id"
               element={
                 <PrivateRoute>
                   <EditPost />

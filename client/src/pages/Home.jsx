@@ -2,9 +2,13 @@ import React, { useEffect, useState, useContext } from "react";
 import axios from "../api/axios.js";
 import PostCard from "../components/PostCard.jsx";
 import { AuthContext } from "../context/AuthContext.jsx";
+import { useNavigate, useParams } from "react-router-dom";
 const Home = () => {
   const [posts, setPosts] = useState([]);
   const { user } = useContext(AuthContext);
+  const navigate = useNavigate()
+ 
+
   useEffect(() => {
     const fetchPosts = async () => {
       try {
@@ -34,6 +38,7 @@ const Home = () => {
           <PostCard
             key={post._id}
             post={post}
+            
             onDelete={user && post.author._id === user.id ? handleDelete : null}
           />
         ))}
